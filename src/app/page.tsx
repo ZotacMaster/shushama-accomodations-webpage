@@ -4,21 +4,62 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
-import { Bed, Coffee, Utensils, Wifi, Waves, Star, Menu, ChevronLeft, ChevronRight } from "lucide-react"
+import { Bed, Coffee, Utensils, Wifi, Waves, Star, Menu, ChevronLeft, ChevronRight, X, MapPin, Phone, Mail} from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { useState } from "react"
+import { useEffect, useState, useRef } from "react"
+import dynamic from 'next/dynamic'
+import LocationMap from "@/components/ui/location-map" 
+
 
 export default function EnhancedGuestHouse() {
   const [currentImage, setCurrentImage] = useState(0)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [activeLocation, setActiveLocation] = useState(0)
+  const mapRef = useRef(null)
+
   const images = [
-    "/placeholder.svg?height=600&width=800",
-    "/placeholder.svg?height=600&width=800",
-    "/placeholder.svg?height=600&width=800",
-    "/placeholder.svg?height=600&width=800",
+    "/assets/images/bathroom.jpeg",
+    "/assets/images/mainhall.jpeg",
+    "/assets/images/room1.jpeg",
+    "/assets/images/room2.jpeg",
+  ]
+
+  const locations = [
+   {
+    id: 1,
+    name: "Salt Lake Property",
+    address: "123 Seaside Avenue, Beachtown, BT 12345",
+    phone: "+1 (555) 123-4567",
+    email: "info@seasidehaven.com",
+    description: "Our flagship property with direct beach access and stunning ocean views.",
+    image: "/images/seaside-haven-hero.jpg",
+    coordinates: { lat: 34.0522, lng: -118.2437 } // Example coordinates (Los Angeles)
+   },
+   {
+    id: 2,
+    name: "New Town Property 1",
+    address: "123 Seaside Avenue, Beachtown, BT 12345",
+    phone: "+1 (555) 123-4567",
+    email: "info@seasidehaven.com",
+    description: "Our flagship property with direct beach access and stunning ocean views.",
+    image: "/images/seaside-haven-hero.jpg",
+    coordinates: { lat: 37.7749, lng: -122.4194 } // Example coordinates (Los Angeles)
+   },
+   {
+    id: 3,
+    name: "New Town Property 2",
+    address: "123 Seaside Avenue, Beachtown, BT 12345",
+    phone: "+1 (555) 123-4567",
+    email: "info@seasidehaven.com",
+    description: "Our flagship property with direct beach access and stunning ocean views.",
+    image: "/images/seaside-haven-hero.jpg",
+    coordinates: { lat: 37.7749, lng: -122.4194 } // Example coordinates (Los Angeles)
+   }
   ]
 
   const nextImage = () => {
@@ -27,6 +68,10 @@ export default function EnhancedGuestHouse() {
 
   const prevImage = () => {
     setCurrentImage((prev) => (prev - 1 + images.length) % images.length)
+  }
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen)
   }
 
   return (
@@ -45,17 +90,59 @@ export default function EnhancedGuestHouse() {
               <Link className="transition-colors hover:text-foreground/80 text-foreground/60" href="#contact">Contact</Link>
             </nav>
           </div>
-          <Button variant="outline" size="icon" className="md:hidden">
-            <Menu className="h-6 w-6" />
+          <Button variant="outline" size="icon" className="md:hidden" onClick={toggleMobileMenu}>
+            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             <span className="sr-only">Toggle menu</span>
           </Button>
           <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
             <Button variant="secondary" className="ml-auto">Book Now</Button>
           </div>
         </div>
+
+        {/* Mobile menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden">
+          <nav className="flex flex-col space-y-4 p-4 bg-background border-t">
+            <Link 
+                  className="transition-colors hover:text-foreground/80 text-foreground/60 font-medium" 
+                  href="#rooms"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Rooms
+            </Link>
+            <Link
+                className="transition-colors hover:text-foreground/80 text-foreground/60 font-medium" 
+                href="#amenities"
+                onClick={() => setMobileMenuOpen(false)}
+            >
+              Amenities
+            </Link>
+            <Link
+                className="transition-colors hover:text-foreground/80 text-foreground/60 font-medium" 
+                href="#gallery"
+                onClick={() => setMobileMenuOpen(false)}
+            >
+              Gallery
+            </Link>
+            <Link
+                className="transition-colors hover:text-foreground/80 text-foreground/60 font-medium" 
+                href="#contact"
+                onClick={() => setMobileMenuOpen(false)}
+            >
+              Contact
+            </Link>
+          </nav>
+        </div>
+        )}
       </header>
+      
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 relative overflow-hidden">
+        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 relative overflow-hidden"
+                 style={{ 
+                  backgroundImage: "url('/assets/images/mainhall2.jpeg')", 
+                  backgroundSize: "cover",
+                  backgroundPosition: "bottom",
+                  }}>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -67,7 +154,7 @@ export default function EnhancedGuestHouse() {
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
                   Welcome to Shushama Accomodations
                 </h1>
-                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+                <p className="mx-auto max-w-[700px] text-white md:text-xl dark:white">
                   Experience tranquility and comfort in our guest house. Your perfect getaway awaits.
                 </p>
               </div>
@@ -77,21 +164,84 @@ export default function EnhancedGuestHouse() {
               </div>
             </div>
           </motion.div>
-          <motion.div
-            initial={{ scale: 1.1 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 10, repeat: Infinity, repeatType: "reverse" }}
-            className="absolute inset-0 z-0"
-          >
-            <Image
-              src="/placeholder.svg?height=1080&width=1920"
-              alt="Seaside Haven"
-              layout="fill"
-              objectFit="cover"
-              quality={100}
-            />
-          </motion.div>
+          
         </section>
+
+        <section id="locations" className="w-full py-12 md:py-24 lg:py-32">
+          <div className="container px-4 md:px-6">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Our Locations</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="order-2 lg:order-1">
+                <LocationMap 
+                  locations={locations} 
+                  activeLocation={activeLocation} 
+                  setActiveLocation={setActiveLocation} 
+                />
+              </div>
+
+              {/* Locations List and Details */}
+              <div className="order-1 lg:order-2">
+                <Tabs 
+                  defaultValue={locations[0].id.toString()} 
+                  className="w-full" 
+                  onValueChange={(value) => setActiveLocation(parseInt(value) - 1)}
+                  value={locations[activeLocation].id.toString()}
+                >
+                  <TabsList className="grid grid-cols-3 mb-6">
+                    {locations.map((location) => (
+                      <TabsTrigger key={location.id} value={location.id.toString()}>
+                        {location.name}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                  
+                  {locations.map((location, index) => (
+                    <TabsContent key={location.id} value={location.id.toString()}>
+                      <Card>
+                        <CardHeader>
+                          <CardTitle>{location.name}</CardTitle>
+                          <CardDescription>
+                            {location.description}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <div className="aspect-video overflow-hidden rounded-md">
+                            <Image
+                              src={location.image || "/placeholder.svg"}
+                              alt={location.name}
+                              width={600}
+                              height={400}
+                              className="object-cover w-full h-full"
+                            />
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <div className="flex items-start gap-2">
+                              <MapPin className="h-5 w-5 text-primary mt-0.5" />
+                              <p className="text-sm">{location.address}</p>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <Phone className="h-5 w-5 text-primary mt-0.5" />
+                              <p className="text-sm">{location.phone}</p>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <Mail className="h-5 w-5 text-primary mt-0.5" />
+                              <p className="text-sm">{location.email}</p>
+                            </div>
+                          </div>
+                        </CardContent>
+                        <CardFooter>
+                          <Button className="w-full">Book This Location</Button>
+                        </CardFooter>
+                      </Card>
+                    </TabsContent>
+                  ))}
+                </Tabs>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="rooms" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Our Rooms</h2>
@@ -99,15 +249,15 @@ export default function EnhancedGuestHouse() {
               <motion.div whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 300 }}>
                 <Card>
                   <CardHeader>
-                    <CardTitle>Ocean View Suite</CardTitle>
-                    <CardDescription>Breathtaking views of the sea</CardDescription>
+                    <CardTitle>Standard Suit</CardTitle>
+                    <CardDescription>Breathtaking views of the city</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <Image
                       src="/placeholder.svg?height=300&width=400"
                       height={300}
                       width={400}
-                      alt="Ocean View Suite"
+                      alt="Standard Suite"
                       className="rounded-lg object-cover w-full"
                     />
                     <div className="mt-4">
@@ -195,10 +345,11 @@ export default function EnhancedGuestHouse() {
             </div>
           </div>
         </section>
+
         <section id="gallery" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Gallery</h2>
-            <div className="relative">
+            <div className="relative w-full max-w-3xl mx-auto">
               <motion.div
                 key={currentImage}
                 initial={{ opacity: 0 }}
@@ -235,6 +386,7 @@ export default function EnhancedGuestHouse() {
             </div>
           </div>
         </section>
+        
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">What Our Guests Say</h2>
