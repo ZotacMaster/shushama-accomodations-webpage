@@ -171,7 +171,7 @@ export default function EnhancedGuestHouse() {
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Our Locations</h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="order-2 lg:order-1">
+              <div className="z-10 order-2 lg:order-1 ">
                 <LocationMap 
                   locations={locations} 
                   activeLocation={activeLocation} 
@@ -187,14 +187,14 @@ export default function EnhancedGuestHouse() {
                   onValueChange={(value) => setActiveLocation(parseInt(value) - 1)}
                   value={locations[activeLocation].id.toString()}
                 >
-                  <TabsList className="grid grid-cols-3 mb-6">
+                  <TabsList className="w-full grid grid-cols-3 mb-2">
                     {locations.map((location) => (
                       <TabsTrigger key={location.id} value={location.id.toString()}>
                         {location.name}
                       </TabsTrigger>
                     ))}
                   </TabsList>
-                  
+
                   {locations.map((location, index) => (
                     <TabsContent key={location.id} value={location.id.toString()}>
                       <Card>
@@ -231,7 +231,13 @@ export default function EnhancedGuestHouse() {
                           </div>
                         </CardContent>
                         <CardFooter>
-                          <Button className="w-full">Book This Location</Button>
+                            <Button 
+                              className="w-full"
+                              size="sm"
+                              onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${locations[activeLocation].coordinates.lat},${locations[activeLocation].coordinates.lng}`, '_blank')}
+                            >
+                              Get Directions
+                            </Button>
                         </CardFooter>
                       </Card>
                     </TabsContent>
@@ -242,7 +248,7 @@ export default function EnhancedGuestHouse() {
           </div>
         </section>
 
-        <section id="rooms" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+        <section id="rooms" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-100">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Our Rooms</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -346,7 +352,7 @@ export default function EnhancedGuestHouse() {
           </div>
         </section>
 
-        <section id="gallery" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+        <section id="gallery" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-100">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Gallery</h2>
             <div className="relative w-full max-w-3xl mx-auto">
@@ -475,7 +481,7 @@ export default function EnhancedGuestHouse() {
           </div>
         </section>
       </main>
-      <footer className="w-full py-6 bg-gray-100 dark:bg-gray-800">
+      <footer className="w-full py-6 bg-gray-100 dark:bg-gray-100">
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             <div className="space-y-4">
@@ -509,9 +515,6 @@ export default function EnhancedGuestHouse() {
                 <Button type="submit">Subscribe</Button>
               </form>
             </div>
-          </div>
-          <div className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
-            © 2024 Seaside Haven. All rights reserved.
           </div>
         </div>
       </footer>
