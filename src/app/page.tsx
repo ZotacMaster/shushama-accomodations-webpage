@@ -13,8 +13,15 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { useEffect, useState, useRef } from "react"
 import dynamic from 'next/dynamic'
-import LocationMap from "@/components/ui/location-map" 
 
+const LocationMap = dynamic(() => import('@/components/ui/location-map'), { 
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[400px] bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+      <p className="text-gray-500 dark:text-gray-400">Loading map...</p>
+    </div>
+  )
+})
 
 export default function EnhancedGuestHouse() {
   const [currentImage, setCurrentImage] = useState(0)
@@ -23,10 +30,10 @@ export default function EnhancedGuestHouse() {
   const mapRef = useRef(null)
 
   const images = [
-    "/assets/images/bathroom.jpeg",
     "/assets/images/mainhall.jpeg",
     "/assets/images/room1.jpeg",
     "/assets/images/room2.jpeg",
+    "/assets/images/bathroom.jpeg",
   ]
 
   const locations = [
