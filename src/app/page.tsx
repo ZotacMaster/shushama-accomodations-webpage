@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
-import { Bed, Coffee, Utensils, Wifi, Waves, Star, Menu, ChevronLeft, ChevronRight, X, MapPin, Phone, Mail} from "lucide-react"
+import { Bed, AirVent, ArrowsUpFromLine, Coffee, Utensils, Wifi, Waves, Star, Menu, ChevronLeft, ChevronRight, X, MapPin, Phone, Mail} from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
@@ -17,7 +17,7 @@ import dynamic from 'next/dynamic'
 const LocationMap = dynamic(() => import('@/components/ui/location-map'), { 
   ssr: false,
   loading: () => (
-    <div className="w-full h-[400px] bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+    <div className="w-full h-[400px] bg-gray-200 dark:bg-gray-500 rounded-lg flex items-center justify-center">
       <p className="text-gray-500 dark:text-gray-400">Loading map...</p>
     </div>
   )
@@ -37,35 +37,41 @@ export default function EnhancedGuestHouse() {
   ]
 
   const locations = [
-   {
+    {
     id: 1,
-    name: "Salt Lake Property",
-    address: "123 Seaside Avenue, Beachtown, BT 12345",
-    phone: "+1 (555) 123-4567",
+    name: "Sushama Accommodations",
+    address: "AL/1/A/16, Street Number 5,New Town Action Area-1A, Kolkata 700156",
+    phone: "+919831804356",
     email: "info@seasidehaven.com",
-    description: "Our flagship property with direct beach access and stunning ocean views.",
+    description: "",
     image: "/images/seaside-haven-hero.jpg",
-    coordinates: { lat: 34.0522, lng: -118.2437 } // Example coordinates (Los Angeles)
+    coordinates: { lat: 34.0522, lng: -118.2437 },
+    maplink:"https://maps.app.goo.gl/G1FVsnka2quiUbkg8",
+    rooms: {stamdard: 0 , delux: 1200, super_delux: 1500}
    },
    {
     id: 2,
-    name: "New Town Property 1",
-    address: "123 Seaside Avenue, Beachtown, BT 12345",
-    phone: "+1 (555) 123-4567",
+    name: "Deep Residency",
+    address: "BD-180, Street Number 117,New Town Action Area-1, Kolkata 700156 (Opposite Biswa Bangla Convention Center)",
+    phone: "+919339456091",
     email: "info@seasidehaven.com",
     description: "Our flagship property with direct beach access and stunning ocean views.",
     image: "/images/seaside-haven-hero.jpg",
-    coordinates: { lat: 37.7749, lng: -122.4194 } // Example coordinates (Los Angeles)
+    coordinates: { lat: 37.7749, lng: -122.4194 },
+    maplink:"",
+    rooms: {standard: 1100, delux: 0, super_delux:0}
    },
    {
     id: 3,
-    name: "New Town Property 2",
-    address: "123 Seaside Avenue, Beachtown, BT 12345",
-    phone: "+1 (555) 123-4567",
+    name: "Sushama Guest House",
+    address: "DA 103, Salt Lake Sector-1,Kolkata 700064 (Opposite Rehabana Rehab Centre)",
+    phone: "+919339456091",
     email: "info@seasidehaven.com",
-    description: "Our flagship property with direct beach access and stunning ocean views.",
+    description: "Peak property located near City Center 1",
     image: "/images/seaside-haven-hero.jpg",
-    coordinates: { lat: 37.7749, lng: -122.4194 } // Example coordinates (Los Angeles)
+    coordinates: { lat: 37.7749, lng: -122.4194 },
+    maplink:"https://maps.app.goo.gl/n4QnvRTG1dnSvt5n6",
+    rooms: {standard: 1200, delux: 1500, super_delux:1800}
    }
   ]
 
@@ -84,11 +90,11 @@ export default function EnhancedGuestHouse() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 items-center">
+        <div className="mx-auto flex h-14 items-center">
           <div className="mr-4 hidden md:flex">
             <Link className="mr-6 flex items-center space-x-2" href="/">
               <Waves className="h-6 w-6" />
-              <span className="hidden font-bold sm:inline-block">Shushama Accomodations</span>
+              <span className="hidden font-bold sm:inline-block">Sushama Accomodations</span>
             </Link>
             <nav className="flex items-center space-x-6 text-sm font-medium">
               <Link className="transition-colors hover:text-foreground/80 text-foreground/60" href="#rooms">Rooms</Link>
@@ -101,9 +107,6 @@ export default function EnhancedGuestHouse() {
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             <span className="sr-only">Toggle menu</span>
           </Button>
-          <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-            <Button variant="secondary" className="ml-auto">Book Now</Button>
-          </div>
         </div>
 
         {/* Mobile menu */}
@@ -154,12 +157,12 @@ export default function EnhancedGuestHouse() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="container px-4 md:px-6 relative z-10"
+            className="content-center px-4 md:px-6 relative z-10"
           >
-            <div className="flex flex-col items-center space-y-4 text-center">
+            <div className="mx-auto flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-                  Welcome to Shushama Accomodations
+                  Welcome to Sushama Accomodations
                 </h1>
                 <p className="mx-auto max-w-[700px] text-white md:text-xl dark:white">
                   Experience tranquility and comfort in our guest house. Your perfect getaway awaits.
@@ -175,10 +178,15 @@ export default function EnhancedGuestHouse() {
         </section>
 
         <section id="locations" className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Our Locations</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="z-10 order-2 lg:order-1 ">
+          <div className="content-center px-4 md:px-6">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">
+              Our Locations
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+
+              {/* Map */}
+              <div className="z-10 order-1 w-full min-h-[200px] min-w-[200px]">
                 <LocationMap 
                   locations={locations} 
                   activeLocation={activeLocation} 
@@ -187,68 +195,70 @@ export default function EnhancedGuestHouse() {
               </div>
 
               {/* Locations List and Details */}
-              <div className="order-1 lg:order-2">
-                <Tabs 
-                  defaultValue={locations[0].id.toString()} 
-                  className="w-full" 
-                  onValueChange={(value) => setActiveLocation(parseInt(value) - 1)}
-                  value={locations[activeLocation].id.toString()}
-                >
-                  <TabsList className="w-full grid grid-cols-3 mb-2">
-                    {locations.map((location) => (
-                      <TabsTrigger key={location.id} value={location.id.toString()}>
-                        {location.name}
-                      </TabsTrigger>
-                    ))}
-                  </TabsList>
+              <div className="order-2 w-full md:w-auto">
+                  <Tabs 
+                    defaultValue={locations[0].id.toString()} 
+                    className="w-full" 
+                    onValueChange={(value) => setActiveLocation(parseInt(value) - 1)}
+                    value={locations[activeLocation].id.toString()}
+                  >
+                    <TabsList className="w-full h-full grid md:max-grid-rows-3 lg:grid-cols-3 mb-0 relative z-10">
+                      {locations.map((location) => (
+                        <TabsTrigger className="w-full pt-2 content-center" key={location.id} value={location.id.toString()}>
+                          {location.name}
+                        </TabsTrigger>
+                      ))}
+                    </TabsList>
 
-                  {locations.map((location, index) => (
-                    <TabsContent key={location.id} value={location.id.toString()}>
-                      <Card>
-                        <CardHeader>
-                          <CardTitle>{location.name}</CardTitle>
-                          <CardDescription>
-                            {location.description}
-                          </CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                          <div className="aspect-video overflow-hidden rounded-md">
-                            <Image
-                              src={location.image || "/placeholder.svg"}
-                              alt={location.name}
-                              width={600}
-                              height={400}
-                              className="object-cover w-full h-full"
-                            />
-                          </div>
-                          
-                          <div className="space-y-2">
-                            <div className="flex items-start gap-2">
-                              <MapPin className="h-5 w-5 text-primary mt-0.5" />
-                              <p className="text-sm">{location.address}</p>
-                            </div>
-                            <div className="flex items-start gap-2">
-                              <Phone className="h-5 w-5 text-primary mt-0.5" />
-                              <p className="text-sm">{location.phone}</p>
-                            </div>
-                            <div className="flex items-start gap-2">
-                              <Mail className="h-5 w-5 text-primary mt-0.5" />
-                              <p className="text-sm">{location.email}</p>
-                            </div>
-                          </div>
-                        </CardContent>
-                        <CardFooter>
-                            <Button 
-                              className="w-full"
-                              size="sm"
-                              onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${locations[activeLocation].coordinates.lat},${locations[activeLocation].coordinates.lng}`, '_blank')}
-                            >
-                              Get Directions
-                            </Button>
-                        </CardFooter>
-                      </Card>
-                    </TabsContent>
-                  ))}
+                    <div className="w-full pt-3 md:pt-5">
+                      {locations.map((location, index) => (
+                        <TabsContent key={location.id} value={location.id.toString()}>
+                          <Card>
+                            <CardHeader>
+                              <CardTitle>{location.name}</CardTitle>
+                              <CardDescription>
+                                {location.description}
+                              </CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                              <div className="aspect-video overflow-hidden rounded-md">
+                                <Image
+                                  src={location.image || "/placeholder.svg"}
+                                  alt={location.name}
+                                  width={600}
+                                  height={400}
+                                  className="object-cover w-full h-full"
+                                />
+                              </div>
+                              
+                              <div className="space-y-2">
+                                <div className="flex items-start gap-2">
+                                  <MapPin className="h-5 w-5 text-primary mt-0.5" />
+                                  <p className="text-sm">{location.address}</p>
+                                </div>
+                                <div className="flex items-start gap-2">
+                                  <Phone className="h-5 w-5 text-primary mt-0.5" />
+                                  <p className="text-sm">{location.phone}</p>
+                                </div>
+                                <div className="flex items-start gap-2">
+                                  <Mail className="h-5 w-5 text-primary mt-0.5" />
+                                  <p className="text-sm">{location.email}</p>
+                                </div>
+                              </div>
+                            </CardContent>
+                            <CardFooter>
+                                <Button 
+                                  className="w-full"
+                                  size="sm"
+                                  onClick={() => window.open(location.maplink, '_blank')}
+                                >
+                                  Get Directions
+                                </Button>
+                            </CardFooter>
+                          </Card>
+                        </TabsContent>
+                      ))}
+                  </div>
                 </Tabs>
               </div>
             </div>
@@ -256,14 +266,14 @@ export default function EnhancedGuestHouse() {
         </section>
 
         <section id="rooms" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-100">
-          <div className="container px-4 md:px-6">
+          <div className="content-center px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Our Rooms</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 content-evenly gap-6 text-center">
               <motion.div whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 300 }}>
                 <Card>
                   <CardHeader>
-                    <CardTitle>Standard Suit</CardTitle>
-                    <CardDescription>Breathtaking views of the city</CardDescription>
+                    <CardTitle>Standard Rooms</CardTitle>
+                    <CardDescription>Affordable and comfortable rooms</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <Image
@@ -274,7 +284,7 @@ export default function EnhancedGuestHouse() {
                       className="rounded-lg object-cover w-full"
                     />
                     <div className="mt-4">
-                      <p>From $199/night</p>
+                      <p>From ₹1100/night</p>
                     </div>
                   </CardContent>
                   <CardFooter>
@@ -285,7 +295,7 @@ export default function EnhancedGuestHouse() {
               <motion.div whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 300 }}>
                 <Card>
                   <CardHeader>
-                    <CardTitle>Retreat</CardTitle>
+                    <CardTitle>Delux Rooms</CardTitle>
                     <CardDescription>Peaceful and serene environment</CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -297,7 +307,7 @@ export default function EnhancedGuestHouse() {
                       className="rounded-lg object-cover w-full"
                     />
                     <div className="mt-4">
-                      <p>From $149/night</p>
+                      <p>From ₹1200/night</p>
                     </div>
                   </CardContent>
                   <CardFooter>
@@ -308,7 +318,7 @@ export default function EnhancedGuestHouse() {
               <motion.div whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 300 }}>
                 <Card>
                   <CardHeader>
-                    <CardTitle>Family Cottage</CardTitle>
+                    <CardTitle>Super Delux Rooms</CardTitle>
                     <CardDescription>Spacious and comfortable for families</CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -320,7 +330,7 @@ export default function EnhancedGuestHouse() {
                       className="rounded-lg object-cover w-full"
                     />
                     <div className="mt-4">
-                      <p>From $249/night</p>
+                      <p>From ₹1500/night</p>
                     </div>
                   </CardContent>
                   <CardFooter>
@@ -332,7 +342,7 @@ export default function EnhancedGuestHouse() {
           </div>
         </section>
         <section id="amenities" className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
+          <div className="content-center px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Amenities</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               <motion.div whileHover={{ y: -10 }} className="flex flex-col items-center space-y-2">
@@ -341,26 +351,26 @@ export default function EnhancedGuestHouse() {
                 <p className="text-sm text-gray-500 dark:text-gray-400">Stay connected throughout your stay</p>
               </motion.div>
               <motion.div whileHover={{ y: -10 }} className="flex flex-col items-center space-y-2">
-                <Coffee className="h-8 w-8" />
-                <h3 className="font-semibold">Complimentary Breakfast</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Start your day right with our delicious breakfast</p>
-              </motion.div>
-              <motion.div whileHover={{ y: -10 }} className="flex flex-col items-center space-y-2">
                 <Bed className="h-8 w-8" />
                 <h3 className="font-semibold">Comfortable Beds</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">Ensure a restful night's sleep</p>
               </motion.div>
               <motion.div whileHover={{ y: -10 }} className="flex flex-col items-center space-y-2">
-                <Utensils className="h-8 w-8" />
-                <h3 className="font-semibold">On-site Restaurant</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Enjoy delicious meals without leaving the premises</p>
+                <ArrowsUpFromLine className="h-8 w-8" />
+                <h3 className="font-semibold">Lifts available</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">No need to extert yourself</p>
+              </motion.div>
+              <motion.div whileHover={{ y: -10 }} className="flex flex-col items-center space-y-2">
+                <AirVent className="h-8 w-8" />
+                <h3 className="font-semibold">Air Conditioned Rooms</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Respite from the heat</p>
               </motion.div>
             </div>
           </div>
         </section>
 
         <section id="gallery" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-100">
-          <div className="container px-4 md:px-6">
+          <div className="content-center px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Gallery</h2>
             <div className="relative w-full max-w-3xl mx-auto">
               <motion.div
@@ -399,50 +409,9 @@ export default function EnhancedGuestHouse() {
             </div>
           </div>
         </section>
-        
-        <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">What Our Guests Say</h2>
-            <div className="max-w-2xl mx-auto">
-              <motion.div whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 300 }}>
-                <Card>
-                  <CardHeader>
-                    <div className="flex items-center space-x-4">
-                      <Image
-                        src="/placeholder.svg?height=40&width=40"
-                        height={40}
-                        width={40}
-                        alt="Guest Avatar"
-                        className="rounded-full"
-                      />
-                      <div>
-                        <CardTitle>Sarah Thompson</CardTitle>
-                        <CardDescription>Stayed in Ocean View Suite</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-500 dark:text-gray-400">
-                      "Our stay at Seaside Haven was absolutely wonderful. The views were breathtaking, the staff was
-                      incredibly friendly, and the amenities were top-notch. We can't wait to come back!"
-                    </p>
-                  </CardContent>
-                  <CardFooter>
-                    <div className="flex items-center">
-                      <Star className="h-5 w-5 fill-primary text-primary" />
-                      <Star className="h-5 w-5 fill-primary text-primary" />
-                      <Star className="h-5 w-5 fill-primary text-primary" />
-                      <Star className="h-5 w-5 fill-primary text-primary" />
-                      <Star className="h-5 w-5 fill-primary text-primary" />
-                    </div>
-                  </CardFooter>
-                </Card>
-              </motion.div>
-            </div>
-          </div>
-        </section>
+
         <section id="contact" className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
+          <div className="content-center px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
               <div className="space-y-4">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Contact Us</h2>
@@ -451,11 +420,11 @@ export default function EnhancedGuestHouse() {
                 </p>
                 <div className="space-y-2">
                   <h3 className="font-semibold">Address</h3>
-                  <p className="text-sm  text-gray-500 dark:text-gray-400">123 Seaside Avenue, Beachtown, BT 12345</p>
+                  <p className="text-sm  text-gray-500 dark:text-gray-400">DA 103, Salt Lake Sector-1,Kolkata 700064</p>
                 </div>
                 <div className="space-y-2">
                   <h3 className="font-semibold">Phone</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">+1 (555) 123-4567</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">+919339456091</p>
                 </div>
                 <div className="space-y-2">
                   <h3 className="font-semibold">Email</h3>
@@ -489,12 +458,12 @@ export default function EnhancedGuestHouse() {
         </section>
       </main>
       <footer className="w-full py-6 bg-gray-100 dark:bg-gray-100">
-        <div className="container px-4 md:px-6">
+        <div className="content-center px-4 md:px-6">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             <div className="space-y-4">
               <h4 className="text-sm font-semibold">About Us</h4>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                Seaside Haven is a charming guest house offering comfortable accommodations and breathtaking ocean views.
+                Sushama Accommodations is a charming guest house offering comfortable accommodations and easy access to the city.
               </p>
             </div>
             <div className="space-y-4">
@@ -513,14 +482,6 @@ export default function EnhancedGuestHouse() {
                 <li><Link href="#">Terms of Service</Link></li>
                 <li><Link href="#">Cancellation Policy</Link></li>
               </ul>
-            </div>
-            <div className="space-y-4">
-              <h4 className="text-sm font-semibold">Newsletter</h4>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Subscribe to our newsletter for special offers and updates.</p>
-              <form className="flex space-x-2">
-                <Input className="max-w-lg flex-1" placeholder="Enter your email" type="email" />
-                <Button type="submit">Subscribe</Button>
-              </form>
             </div>
           </div>
         </div>
